@@ -4,7 +4,7 @@ package com.planb.server;
  * @author PlanB
  * 服务启动器接口
  */
-public interface HttpServer {
+public interface RpcServer {
     /**
      * 启动服务
      */

@@ -1,4 +1,4 @@
-package com.planb.server.impl;
+package com.planb.server.impl.vertx;
 
 import com.planb.model.RpcRequest;
 import com.planb.model.RpcResponse;
@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
 /**
  * HTTP 请求处理
  */
-public class HttpServerHandler implements Handler<HttpServerRequest> {
+public class VertxHttpServerHandler implements Handler<HttpServerRequest> {
 
     @Override
     public void handle(HttpServerRequest request) {

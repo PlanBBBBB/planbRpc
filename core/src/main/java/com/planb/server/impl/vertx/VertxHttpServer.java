@@ -1,19 +1,20 @@
-package com.planb.server.impl;
+package com.planb.server.impl.vertx;
 
-import com.planb.server.HttpServer;
+import com.planb.server.RpcServer;
 import io.vertx.core.Vertx;
 
 /**
+ * @author PlanB
  * VertxHttpServer 服务启动器
  */
-public class VertxHttpServer implements HttpServer {
+public class VertxHttpServer implements RpcServer {
     @Override
     public void start(int port) {
         Vertx vertx = Vertx.vertx();
 
         io.vertx.core.http.HttpServer server = vertx.createHttpServer();
 
-        server.requestHandler(new HttpServerHandler());
+        server.requestHandler(new VertxHttpServerHandler());
 
         server.listen(port, result -> {
             if (result.succeeded()) {
