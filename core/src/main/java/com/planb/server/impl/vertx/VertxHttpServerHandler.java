@@ -1,10 +1,11 @@
 package com.planb.server.impl.vertx;
 
+import com.planb.RpcApplication;
 import com.planb.model.RpcRequest;
 import com.planb.model.RpcResponse;
 import com.planb.register.LocalRegister;
 import com.planb.serialization.Serialization;
-import com.planb.serialization.impl.JdkSerialization;
+import com.planb.serialization.SerializerFactory;
 import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerRequest;
@@ -13,6 +14,7 @@ import io.vertx.core.http.HttpServerResponse;
 import java.lang.reflect.Method;
 
 /**
+ * @author PlanB
  * HTTP 请求处理
  */
 public class VertxHttpServerHandler implements Handler<HttpServerRequest> {
@@ -20,7 +22,7 @@ public class VertxHttpServerHandler implements Handler<HttpServerRequest> {
     @Override
     public void handle(HttpServerRequest request) {
         // 指定序列化器
-        Serialization serialization = new JdkSerialization();
+        final Serialization serialization = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerialization());
 
         // 记录日志
         System.out.println("HTTP 请求处理" + request.method() + " " + request.uri());

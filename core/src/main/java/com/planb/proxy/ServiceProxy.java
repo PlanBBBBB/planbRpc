@@ -2,23 +2,24 @@ package com.planb.proxy;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
+import com.planb.RpcApplication;
 import com.planb.model.RpcRequest;
 import com.planb.model.RpcResponse;
 import com.planb.serialization.Serialization;
-import com.planb.serialization.impl.JdkSerialization;
+import com.planb.serialization.SerializerFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 /**
- * 服务代理（JDK动态代理）
+ * @author PlanB
+ * 服务代理（动态代理）
  */
 public class ServiceProxy implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         // 指定序列化器
-        Serialization serialization = new JdkSerialization();
-
+        final Serialization serialization = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerialization());
         // 构造请求
         RpcRequest rpcRequest = RpcRequest.builder()
                 .serviceName(method.getDeclaringClass().getName())

@@ -28,4 +28,9 @@ public class RpcConfig {
      * 服务器端口
      */
     private Integer serverPort = 8080;
+
+    /**
+     * 序列化方式
+     */
+    private String serialization = "jdk";
 }

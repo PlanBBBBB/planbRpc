@@ -1,0 +1,5 @@
+protostuff=com.planb.serialization.impl.ProtostuffSerialization
+kryo=com.planb.serialization.impl.KryoSerialization
+json=com.planb.serialization.impl.JsonSerialization
+jdk=com.planb.serialization.impl.JdkSerialization
+hessian=com.planb.serialization.impl.HessianSerialization
