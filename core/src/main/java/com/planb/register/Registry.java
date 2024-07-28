@@ -46,4 +46,9 @@ public interface Registry {
      * 关闭注册中心
      */
     void close();
+
+    /**
+     * 心跳检测
+     */
+    void heartBeat();
 }
