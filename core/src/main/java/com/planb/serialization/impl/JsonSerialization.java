@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.planb.serialization.Serialization;
 import lombok.SneakyThrows;
 
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 
@@ -33,7 +34,10 @@ public class JsonSerialization implements Serialization {
     @Override
     public <T> byte[] serialize(T object) {
         try {
-            Gson gson = new GsonBuilder().registerTypeAdapter(Class.class, new ClassCodec()).create();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Class.class, new ClassCodec())
+                    .excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC)
+                    .create();
             String json = gson.toJson(object);
             return json.getBytes(StandardCharsets.UTF_8);
         } catch (Exception e) {
@@ -44,7 +48,10 @@ public class JsonSerialization implements Serialization {
     @Override
     public <T> T deserialize(Class<T> clazz, byte[] bytes) {
         try {
-            Gson gson = new GsonBuilder().registerTypeAdapter(Class.class, new ClassCodec()).create();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Class.class, new ClassCodec())
+                    .excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC)
+                    .create();
             String json = new String(bytes, StandardCharsets.UTF_8);
             return gson.fromJson(json, clazz);
         } catch (JsonSyntaxException e) {

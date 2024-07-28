@@ -22,6 +22,7 @@ public class VertxHttpServerHandler implements Handler<HttpServerRequest> {
     @Override
     public void handle(HttpServerRequest request) {
         // 指定序列化器
+        System.out.println("指定序列化器");
         final Serialization serialization = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerialization());
 
         // 记录日志

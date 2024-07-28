@@ -33,4 +33,9 @@ public class RpcConfig {
      * 序列化方式
      */
     private String serialization = "jdk";
+
+    /**
+     * 注册中心配置
+     */
+    private RegistryConfig registryConfig = new RegistryConfig();
 }

@@ -1,7 +1,10 @@
 package com.planb;
 
+import com.planb.config.RegistryConfig;
 import com.planb.config.RpcConfig;
 import com.planb.constant.RpcConstant;
+import com.planb.register.Registry;
+import com.planb.register.RegistryFactory;
 import com.planb.util.ConfigUtils;
 
 /**
@@ -19,6 +22,12 @@ public class RpcApplication {
      */
     public static void init(RpcConfig newRpcConfig) {
         rpcConfig = newRpcConfig;
+        System.out.println("RpcApplication init :" + newRpcConfig.toString());
+        // 注册中心初始化
+        RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
+        Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
+        registry.init(registryConfig);
+        System.out.println("registry init: " + registryConfig);
     }
 
     /**
