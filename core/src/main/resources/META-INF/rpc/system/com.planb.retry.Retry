@@ -1,0 +1,2 @@
+no=com.planb.retry.impl.NoRetry
+fixedInterval=com.planb.retry.impl.FixedIntervalRetry

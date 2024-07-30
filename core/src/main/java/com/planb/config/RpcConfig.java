@@ -1,6 +1,7 @@
 package com.planb.config;
 
 import com.planb.loadbalance.LoadBalancerKeys;
+import com.planb.retry.RetryKeys;
 import lombok.Data;
 
 /**
@@ -44,4 +45,9 @@ public class RpcConfig {
      * 负载均衡
      */
     private String loadBalancer = LoadBalancerKeys.ROUND_ROBIN;
+
+    /**
+     * 重试策略
+     */
+    private String retry = RetryKeys.NO;
 }

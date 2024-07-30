@@ -34,7 +34,7 @@
             <artifactId>hutool-all</artifactId>
             <version>5.8.16</version>
         </dependency>
-
+        <!--序列化器相关包-->
         <dependency>
             <groupId>com.caucho</groupId>
             <artifactId>hessian</artifactId>
@@ -60,10 +60,17 @@
             <artifactId>protostuff-runtime</artifactId>
             <version>1.8.0</version>
         </dependency>
+        <!--操作etcd相关包-->
         <dependency>
             <groupId>io.etcd</groupId>
             <artifactId>jetcd-core</artifactId>
             <version>0.7.7</version>
+        </dependency>
+        <!--重试-->
+        <dependency>
+            <groupId>com.github.rholder</groupId>
+            <artifactId>guava-retrying</artifactId>
+            <version>2.0.0</version>
         </dependency>
     </dependencies>
 </project>
