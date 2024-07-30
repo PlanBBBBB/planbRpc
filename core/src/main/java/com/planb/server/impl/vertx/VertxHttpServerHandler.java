@@ -54,7 +54,7 @@ public class VertxHttpServerHandler implements Handler<HttpServerRequest> {
                 Object result = method.invoke(serviceClass.newInstance(), rpcRequest.getParameters());
                 rpcResponse.setData(result);
                 rpcResponse.setDataType(method.getReturnType());
-                rpcResponse.setMessage("success");
+                rpcResponse.setMessage("ok");
             } catch (Exception e) {
                 e.printStackTrace();
                 rpcResponse.setMessage(e.getMessage());

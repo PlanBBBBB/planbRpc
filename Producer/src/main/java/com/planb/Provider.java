@@ -7,7 +7,7 @@ import com.planb.register.LocalRegister;
 import com.planb.register.Registry;
 import com.planb.register.RegistryFactory;
 import com.planb.server.RpcServer;
-import com.planb.server.impl.vertx.VertxHttpServer;
+import com.planb.server.impl.tcp.VertxTcpServer;
 import com.planb.service.HelloService;
 import com.planb.service.impl.HelloServiceImpl;
 
@@ -34,7 +34,11 @@ public class Provider {
             throw new RuntimeException(e);
         }
         // 启动服务
-        RpcServer server = new VertxHttpServer();
+//        RpcServer server = new VertxHttpServer();
+//        server.start(RpcApplication.getRpcConfig().getServerPort());
+
+        // 启动TCP服务
+        RpcServer server = new VertxTcpServer();
         server.start(RpcApplication.getRpcConfig().getServerPort());
     }
 }
