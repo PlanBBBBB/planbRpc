@@ -1,5 +1,6 @@
 package com.planb.config;
 
+import com.planb.loadbalance.LoadBalancerKeys;
 import lombok.Data;
 
 /**
@@ -38,4 +39,9 @@ public class RpcConfig {
      * 注册中心配置
      */
     private RegistryConfig registryConfig = new RegistryConfig();
+
+    /**
+     * 负载均衡
+     */
+    private String loadBalancer = LoadBalancerKeys.ROUND_ROBIN;
 }

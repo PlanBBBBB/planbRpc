@@ -4,13 +4,13 @@ import cn.hutool.core.collection.CollUtil;
 import com.planb.RpcApplication;
 import com.planb.config.RpcConfig;
 import com.planb.constant.RpcConstant;
+import com.planb.loadbalance.LoadBalancer;
+import com.planb.loadbalance.LoadBalancerFactory;
 import com.planb.model.RpcRequest;
 import com.planb.model.RpcResponse;
 import com.planb.model.ServiceMetaInfo;
 import com.planb.register.Registry;
 import com.planb.register.RegistryFactory;
-import com.planb.serialization.Serialization;
-import com.planb.serialization.SerializerFactory;
 import com.planb.server.impl.tcp.VertxTcpClient;
 
 import java.lang.reflect.InvocationHandler;
@@ -24,8 +24,6 @@ import java.util.List;
 public class ServiceProxy implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        // 指定序列化器
-        final Serialization serialization = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerialization());
         // 构造请求
         String serverName = method.getDeclaringClass().getName();
         RpcRequest rpcRequest = RpcRequest.builder()
@@ -35,9 +33,6 @@ public class ServiceProxy implements InvocationHandler {
                 .parameters(args)
                 .build();
         try {
-            // 序列化
-            byte[] bytes = serialization.serialize(rpcRequest);
-
             // 使用注册中心和服务发现机制解决
             RpcConfig rpcConfig = RpcApplication.getRpcConfig();
             Registry registry = RegistryFactory.getInstance(rpcConfig.getRegistryConfig().getRegistry());
@@ -48,8 +43,11 @@ public class ServiceProxy implements InvocationHandler {
             if (CollUtil.isEmpty(serviceMetaInfoList)) {
                 throw new RuntimeException("暂未发现服务");
             }
-            // todo 暂时取第一个
-            ServiceMetaInfo selectedServiceMetaInfo = serviceMetaInfoList.get(0);
+
+            // 负载均衡
+            LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());
+            ServiceMetaInfo selectedServiceMetaInfo = loadBalancer.select(rpcRequest, serviceMetaInfoList);
+
             // 发送TCP请求
             RpcResponse rpcResponse = VertxTcpClient.doRequest(rpcRequest, selectedServiceMetaInfo);
             return rpcResponse.getData();

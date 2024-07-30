@@ -1,0 +1,3 @@
+roundRobin=com.planb.loadbalance.impl.RoundRobinLoadBalancer
+random=com.planb.loadbalance.impl.RandomLoadBalancer
+consistentHash=com.planb.loadbalance.impl.ConsistentHashLoadBalancer
