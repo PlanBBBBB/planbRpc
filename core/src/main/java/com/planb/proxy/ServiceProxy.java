@@ -14,6 +14,7 @@ import com.planb.register.RegistryFactory;
 import com.planb.retry.Retry;
 import com.planb.retry.RetryFactory;
 import com.planb.server.impl.tcp.VertxTcpClient;
+import com.planb.tolerant.TolerantFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -51,10 +52,16 @@ public class ServiceProxy implements InvocationHandler {
             ServiceMetaInfo selectedServiceMetaInfo = loadBalancer.select(rpcRequest, serviceMetaInfoList);
 
             // 发送TCP请求 - 使用重试机制
-            Retry retry = RetryFactory.getInstance(rpcConfig.getRetry());
-            RpcResponse rpcResponse = retry.doRetry(() ->
-                    VertxTcpClient.doRequest(rpcRequest, selectedServiceMetaInfo)
-            );
+            RpcResponse rpcResponse;
+            try {
+                Retry retry = RetryFactory.getInstance(rpcConfig.getRetry());
+                rpcResponse = retry.doRetry(() ->
+                        VertxTcpClient.doRequest(rpcRequest, selectedServiceMetaInfo)
+                );
+            } catch (Exception e) {
+                // 容错机制
+                return TolerantFactory.getInstance(rpcConfig.getTolerant()).doTolerant(null, e);
+            }
             return rpcResponse.getData();
         } catch (Exception e) {
             e.printStackTrace();

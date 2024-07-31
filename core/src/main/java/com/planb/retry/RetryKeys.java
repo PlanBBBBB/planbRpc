@@ -3,16 +3,16 @@ package com.planb.retry;
 /**
  * 重试策略键名常量
  */
-public interface RetryKeys {
+public class RetryKeys {
 
     /**
      * 不重试
      */
-    String NO = "no";
+    public static final String NO = "no";
 
     /**
      * 固定时间间隔
      */
-    String FIXED_INTERVAL = "fixedInterval";
+    public static final String FIXED_INTERVAL = "fixedInterval";
 
 }

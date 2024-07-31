@@ -1,0 +1,4 @@
+failBack=com.planb.tolerant.impl.FailBackTolerant
+failFast=com.planb.tolerant.impl.FailFastTolerant
+failOver=com.planb.tolerant.impl.FailOverTolerant
+failSafe=com.planb.tolerant.impl.FailSafeTolerant

@@ -2,6 +2,8 @@ package com.planb.config;
 
 import com.planb.loadbalance.LoadBalancerKeys;
 import com.planb.retry.RetryKeys;
+import com.planb.tolerant.TolerantKeys;
+import com.planb.tolerant.mock.MockServiceKeys;
 import lombok.Data;
 
 /**
@@ -50,4 +52,14 @@ public class RpcConfig {
      * 重试策略
      */
     private String retry = RetryKeys.NO;
+
+    /**
+     * 容错策略
+     */
+    private String tolerant = TolerantKeys.FAIL_FAST;
+
+    /**
+     * 模拟服务
+     */
+    private String mockService = MockServiceKeys.DEFAULT;
 }
