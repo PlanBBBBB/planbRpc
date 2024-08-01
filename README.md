@@ -26,7 +26,7 @@
 
 RPC 又称远程过程调用（Remote Procedure Call），用于解决分布式系统中服务之间的调用问题。通俗地讲，就是开发者能够像调用本地方法一样调用远程的服务。一个最基本的RPC框架的基本架构如下图所示：
 
-<img src="images\简单RPC架构图.png" alt="简单RPC架构图" style="zoom: 45%;" />
+<img src="images\RPC基本架构图.png" alt="RPC基本架构图" style="zoom: 45%;" />
 
 RPC框架一般必须包含三个组件，分别是**客户端、服务端**以及**注册中心**，一次完整的 RPC 调用流程一般为：
 
